@@ -2,8 +2,8 @@ package logic
 
 import (
 	"context"
-	"database/sql"
 	"strings"
+	"time"
 
 	"ReactDemoBackend/core/helper"
 	"ReactDemoBackend/core/internal/svc"
@@ -46,8 +46,7 @@ func (l *UserRegisterLogic) UserRegister(req *types.UserRegisterReq) (resp *type
 		return
 	}
 	user := model.Users{}
-	user.Status = sql.NullInt64{}
-	user.Status.Int64 = 1
+	user.Status = 1
 	user.Username = userName
 	tmpPass, err := helper.HashPassword(password)
 	if nil != err {
@@ -56,6 +55,8 @@ func (l *UserRegisterLogic) UserRegister(req *types.UserRegisterReq) (resp *type
 		return
 	}
 	user.Password = string(tmpPass)
+	user.CreatedAt = time.Now().UTC()
+	user.UpdatedAt = time.Now().UTC()
 	result, err := userModel.Insert(l.ctx, &user)
 	if nil != err {
 		resp.Code = 409

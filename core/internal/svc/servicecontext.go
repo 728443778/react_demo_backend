@@ -3,6 +3,7 @@ package svc
 import (
 	"ReactDemoBackend/core/internal/config"
 
+	_ "github.com/lib/pq"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )
 

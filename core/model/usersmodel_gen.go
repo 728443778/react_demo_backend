@@ -7,6 +7,7 @@ import (
 	"database/sql"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/zeromicro/go-zero/core/stores/builder"
 	"github.com/zeromicro/go-zero/core/stores/sqlc"
@@ -25,6 +26,7 @@ type (
 	usersModel interface {
 		Insert(ctx context.Context, data *Users) (sql.Result, error)
 		FindOne(ctx context.Context, id int64) (*Users, error)
+		FindOneByUsername(ctx context.Context, username string) (*Users, error)
 		Update(ctx context.Context, newData *Users) error
 		Delete(ctx context.Context, id int64) error
 	}
@@ -35,12 +37,12 @@ type (
 	}
 
 	Users struct {
-		Id        int64         `db:"id"`
-		Username  string        `db:"username"`
-		Password  string        `db:"password"`
-		Status    sql.NullInt64 `db:"status"`
-		CreatedAt sql.NullTime  `db:"created_at"`
-		UpdatedAt sql.NullTime  `db:"updated_at"`
+		Id        int64     `db:"id"`
+		Username  string    `db:"username"`
+		Password  string    `db:"password"`
+		Status    int64     `db:"status"`
+		CreatedAt time.Time `db:"created_at"`
+		UpdatedAt time.Time `db:"updated_at"`
 	}
 )
 
@@ -71,18 +73,31 @@ func (m *defaultUsersModel) FindOne(ctx context.Context, id int64) (*Users, erro
 	}
 }
 
+func (m *defaultUsersModel) FindOneByUsername(ctx context.Context, username string) (*Users, error) {
+	var resp Users
+	query := fmt.Sprintf("select %s from %s where username = $1 limit 1", usersRows, m.table)
+	err := m.conn.QueryRowCtx(ctx, &resp, query, username)
+	switch err {
+	case nil:
+		return &resp, nil
+	case sqlc.ErrNotFound:
+		return nil, ErrNotFound
+	default:
+		return nil, err
+	}
+}
+
 func (m *defaultUsersModel) Insert(ctx context.Context, data *Users) (sql.Result, error) {
 	query := fmt.Sprintf("insert into %s (%s) values ($1, $2, $3, $4, $5)", m.table, usersRowsExpectAutoSet)
 	ret, err := m.conn.ExecCtx(ctx, query, data.Username, data.Password, data.Status, data.CreatedAt, data.UpdatedAt)
 	return ret, err
 }
 
-func (m *defaultUsersModel) Update(ctx context.Context, data *Users) error {
+func (m *defaultUsersModel) Update(ctx context.Context, newData *Users) error {
 	query := fmt.Sprintf("update %s set %s where id = $1", m.table, usersRowsWithPlaceHolder)
-	_, err := m.conn.ExecCtx(ctx, query, data.Id, data.Username, data.Password, data.Status, data.CreatedAt, data.UpdatedAt)
+	_, err := m.conn.ExecCtx(ctx, query, newData.Id, newData.Username, newData.Password, newData.Status, newData.CreatedAt, newData.UpdatedAt)
 	return err
 }
-
 
 func (m *defaultUsersModel) tableName() string {
 	return m.table
