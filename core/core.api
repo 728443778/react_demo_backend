@@ -1,0 +1,33 @@
+service user {
+	@handler User
+	post /user/login(LoginRequest) returns (LoginResponse)
+	
+	@handler UserRegister
+	post /user/register(UserRegisterReq) returns (UserRegisterResp)
+}
+
+type UserRegisterReq {
+	UserName string `json:"username"`
+	Password string `json:"password"`
+}
+
+type UserRegisterResp {
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
+}
+
+type LoginRequest {
+	UserName string `json:"username"`
+	Password string `json:"password"`
+}
+
+type LoginResponse {
+	Code  int               `json:"code"`
+	Data  LoginResponseData `json:"data"`
+	Token string            `json:"token"`
+}
+
+type LoginResponseData {
+	Avatar   string `json:"avatar"`
+	UserName string `json:"username"`
+}

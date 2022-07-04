@@ -1,0 +1,5 @@
+Name: react_demo_backend_api
+Host: 0.0.0.0
+Port: 8888
+Mysql:
+  DataSource : "user=postgres password=postgres host=127.0.0.1 port=5432 dbname=react_demo_backend sslmode=disable"
