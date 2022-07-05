@@ -4,5 +4,5 @@ Port: 8888
 Mysql:
   DataSource : "user=postgres password=postgres host=127.0.0.1 port=5432 dbname=react_demo_backend sslmode=disable"
 JwtAuth:
-  AccessSecret: ""
+  AccessSecret: "0cd59742f68ae3c468ee5b418eeeb0f070dd1d8dbd778184e65b10d786ff5d14"
   AccessExpire: 86400
