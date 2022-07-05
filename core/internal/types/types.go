@@ -20,9 +20,11 @@ type LoginResponse struct {
 	Code  int               `json:"code"`
 	Data  LoginResponseData `json:"data"`
 	Token string            `json:"token"`
+	Msg string `json:"msg"`
 }
 
 type LoginResponseData struct {
 	Avatar   string `json:"avatar"`
 	UserName string `json:"username"`
+	Token 	 string `json:"token"`
 }
