@@ -25,11 +25,15 @@ func NewUserLogoutLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserLo
 
 func (l *UserLogoutLogic) UserLogout(req *types.UserLogOutReq) (resp *types.UserLogOutResp, err error) {
 	// todo: add your logic here and delete this line
-
-	logx.Info("User Logout:", l.ctx.Value("userId"))
-	//如果要做唯一登录，可以在用户表存储一个loginVersion,在这儿把loginVersion +1 ,同时，生成jwtToken的时候也把logingVersion+1,并同时保存到token中
 	resp = &types.UserLogOutResp{}
+
+	claims, err := l.svcCtx.JwtParseToken(req.Token)
+	if nil != err {
+		resp.Code = 401
+		return
+	}
+	logx.Info("user logout:", claims["userId"])
+	//如果要做唯一登录，可以在用户表存储一个loginVersion,在这儿把loginVersion +1 ,同时，生成jwtToken的时候也把logingVersion+1,并同时保存到token中
 	resp.Code = 200
-	return
 	return
 }

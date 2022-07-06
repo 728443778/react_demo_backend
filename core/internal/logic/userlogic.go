@@ -2,7 +2,6 @@ package logic
 
 import (
 	"context"
-	"time"
 
 	"ReactDemoBackend/core/helper"
 	"ReactDemoBackend/core/internal/svc"
@@ -46,8 +45,7 @@ func (l *UserLogic) User(req *types.LoginRequest) (resp *types.LoginResponse, er
 		resp.Msg = "用户不存在或者密码错误"
 		return
 	}
-	now := time.Now().Unix()
-	toekn, err := l.svcCtx.NewJwtToken(l.svcCtx.Config.JwtAuth.AccessSecret, now, l.svcCtx.Config.JwtAuth.AccessExpire, findUser.Id)
+	toekn, err := l.svcCtx.NewJwtToken(findUser.Id)
 	if nil != err {
 		logx.Error(err)
 		resp.Code = 500

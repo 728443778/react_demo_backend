@@ -6,9 +6,10 @@ service user {
 	post /user/register(UserRegisterReq) returns (UserRegisterResp)
 }
 
-@server(
-	jwt: Auth
-)
+// @server(
+// 	jwt: Auth
+// )
+//自己实现，默认的参数名固定同时抛出的是http code 码，客户端不好处理
 service user {
 	@handler UserLogout
 	post /user/logout(UserLogOutReq) returns (UserLogOutResp)

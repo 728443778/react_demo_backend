@@ -33,6 +33,6 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: UserLogoutHandler(serverCtx),
 			},
 		},
-		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
+		// rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
 	)
 }
