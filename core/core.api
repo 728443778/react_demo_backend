@@ -6,14 +6,30 @@ service user {
 	post /user/register(UserRegisterReq) returns (UserRegisterResp)
 }
 
+@server(
+	jwt: Auth
+)
+service user {
+	@handler UserLogout
+	post /user/logout(UserLogOutReq) returns (UserLogOutResp)
+}
+
 type UserRegisterReq {
 	UserName string `json:"username"`
 	Password string `json:"password"`
 }
 
+type UserLogOutReq {
+	Token string `json:"token"`
+}
+
 type UserRegisterResp {
 	Code int    `json:"code"`
 	Msg  string `json:"msg"`
+}
+
+type UserLogOutResp {
+	Code int `json:"code"`
 }
 
 type LoginRequest {

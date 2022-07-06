@@ -6,9 +6,17 @@ type UserRegisterReq struct {
 	Password string `json:"password"`
 }
 
+type UserLogOutReq struct {
+	Token string `json:"token"`
+}
+
 type UserRegisterResp struct {
 	Code int    `json:"code"`
 	Msg  string `json:"msg"`
+}
+
+type UserLogOutResp struct {
+	Code int `json:"code"`
 }
 
 type LoginRequest struct {
@@ -20,11 +28,9 @@ type LoginResponse struct {
 	Code  int               `json:"code"`
 	Data  LoginResponseData `json:"data"`
 	Token string            `json:"token"`
-	Msg string `json:"msg"`
 }
 
 type LoginResponseData struct {
 	Avatar   string `json:"avatar"`
 	UserName string `json:"username"`
-	Token 	 string `json:"token"`
 }

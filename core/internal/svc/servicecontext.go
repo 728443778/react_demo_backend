@@ -28,5 +28,6 @@ func (l *ServiceContext) NewJwtToken(secret string, iat int64, seconds int64, us
 	claims["userId"] = userId
 	token := jwt.New(jwt.SigningMethodHS256)
 	token.Claims = claims
+	//如果需要考虑单点登录的问题，可以加入一个版本号控制，用户数据或者redis存储一个用户登录的inc 值，验证的时候，用jwt的版本号值和数据库或者缓存中的值进行判断
 	return token.SignedString([]byte(secret))
 }
