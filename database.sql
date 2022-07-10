@@ -12,3 +12,14 @@ create table users (
 );
 
 create unique index unique_username on users using btree (username);    
+
+
+create table articles (
+    id serial not null primary key,
+    title varchar(255) not null,
+    content text not null,
+    author_id bigint not null,
+    status smallint not null,
+    created_at bigint not null,
+    updated_at bigint not null
+);
