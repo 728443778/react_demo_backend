@@ -34,6 +34,7 @@ func (l *UserLogic) User(req *types.LoginRequest) (resp *types.LoginResponse, er
 	if nil != err {
 		logx.Error(err)
 		resp.Code = 406
+		err = nil
 		resp.Msg = "用户不存在或者密码错误"
 		return
 	}
@@ -41,7 +42,7 @@ func (l *UserLogic) User(req *types.LoginRequest) (resp *types.LoginResponse, er
 	err = helper.CheckPassword(req.Password, findUser.Password)
 	if nil != err {
 		logx.Error(err)
-
+		err = nil
 		resp.Code = 406
 		resp.Msg = "用户不存在或者密码错误"
 		return
@@ -49,6 +50,7 @@ func (l *UserLogic) User(req *types.LoginRequest) (resp *types.LoginResponse, er
 	toekn, err := l.svcCtx.NewJwtToken(findUser.Id)
 	if nil != err {
 		logx.Error(err)
+		err = nil
 		resp.Code = 500
 		resp.Msg = "sever error"
 	}
