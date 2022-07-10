@@ -34,5 +34,5 @@ type LoginResponseData struct {
 	Avatar    string `json:"avatar"`
 	UserName  string `json:"username"`
 	Token     string `json:"token"`
-	ExpiredAt int    `json:"exp"`
+	ExpiredAt int64    `json:"exp"`
 }

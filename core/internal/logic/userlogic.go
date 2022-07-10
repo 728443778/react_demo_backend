@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"time"
 
 	"ReactDemoBackend/core/helper"
 	"ReactDemoBackend/core/internal/svc"
@@ -53,9 +54,10 @@ func (l *UserLogic) User(req *types.LoginRequest) (resp *types.LoginResponse, er
 	}
 	resp.Code = 200
 	resp.Data = types.LoginResponseData{
-		Avatar:   "",
-		Token:    toekn,
-		UserName: findUser.Username,
+		Avatar:    "",
+		Token:     toekn,
+		UserName:  findUser.Username,
+		ExpiredAt: time.Now().Unix() + l.svcCtx.Config.JwtAuth.AccessExpire,
 	}
 	return
 }
