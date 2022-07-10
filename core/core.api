@@ -21,8 +21,8 @@ service user {
 }
 
 type GetArticlesReq {
-	Token string `json:"token"`
-	Page  int    `json:"page"`
+	Token string `form:"token"`
+	Page  int    `form:"page"`
 }
 
 type GetArticlesResp {
@@ -72,5 +72,5 @@ type LoginResponseData {
 	Avatar    string `json:"avatar"`
 	UserName  string `json:"username"`
 	Token     string `json:"token"`
-	ExpiredAt int64    `json:"exp"`
+	ExpiredAt int64  `json:"exp"`
 }

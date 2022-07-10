@@ -31,7 +31,7 @@ func NewArticlesModel(conn sqlx.SqlConn) ArticlesModel {
 }
 
 func (m *defaultArticlesModel) FindAllByAuthorId(ctx context.Context, authorId int64, limit int, page int, queryOrder string) (articles []Articles, err error) {
-	query := fmt.Sprintf("select %s from %s where author_id = $1  order by $2 limit $3, $4", articlesRows, m.table)
+	query := fmt.Sprintf("select %s from %s where author_id = $1  order by $2 limit $3 offset $4", articlesRows, m.table)
 	if queryOrder == "" {
 		queryOrder = "id DESC"
 	}

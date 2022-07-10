@@ -2,8 +2,8 @@
 package types
 
 type GetArticlesReq struct {
-	Token string `json:"token"`
-	Page  int    `json:"page"`
+	Token string `form:"token"`
+	Page  int    `form:"page"`
 }
 
 type GetArticlesResp struct {
@@ -53,5 +53,5 @@ type LoginResponseData struct {
 	Avatar    string `json:"avatar"`
 	UserName  string `json:"username"`
 	Token     string `json:"token"`
-	ExpiredAt int64    `json:"exp"`
+	ExpiredAt int64  `json:"exp"`
 }

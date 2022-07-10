@@ -31,7 +31,8 @@ func (l *GetArticlesLogic) GetArticles(req *types.GetArticlesReq) (resp *types.G
 	resp = &types.GetArticlesResp{}
 	if nil != err {
 		resp.Code = 401
-		resp.Msg = "auth failed"
+		resp.Msg = err.Error()
+		err = nil
 		return
 	}
 	if helper.GetValueType(claims["userId"]) != "int" {
