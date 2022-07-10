@@ -15,6 +15,30 @@ service user {
 	post /user/logout(UserLogOutReq) returns (UserLogOutResp)
 }
 
+service user {
+	@handler GetArticles
+	get /articles(GetArticlesReq) returns (GetArticlesResp)
+}
+
+type GetArticlesReq {
+	Token string `json:"token"`
+	Page  int    `json:"page"`
+}
+
+type GetArticlesResp {
+	Code int                   `json:"code"`
+	Msg  string                `json:"msg"`
+	Data []GetArticlesRespData `json:"data"`
+}
+
+type GetArticlesRespData {
+	Id        int    `json:"id"`
+	Title     string `json:"title"`
+	Content   string `json:"content"`
+	CreatedAt int64  `json:"created_at"`
+	UpdatedAt int64  `json:"updated_at"`
+}
+
 type UserRegisterReq {
 	UserName string `json:"username"`
 	Password string `json:"password"`
